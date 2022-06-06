@@ -1,0 +1,26 @@
+import java.util.Arrays;
+
+class Solution {
+    public String solution(String[] participant, String[] completion) {
+        String answer = "";
+        
+        Arrays.sort(participant);
+        Arrays.sort(completion);
+        
+        for(int i =0;i<completion.length;i++){
+            if(! participant[i].equals(completion[i])){
+                 answer = participant[i];
+                break;
+            }
+        }
+        if(answer == "") answer = participant[participant.length-1];
+        return answer;
+    }
+}
+
+// participant 참가자 배열
+// completion 완주자 배열
+// 두 배열은 1만큼 차이가 난다 ==> 한 명만 못들어왔다.
+// 정렬을 하여 탐색 시간을 줄인다.
+// 또한 찾을 경우 for문을 바로 나온다.
+// 최악의 경우 끝까지 간 후 못찾을 경우 participant의 마지막 인원을 출력한다.
