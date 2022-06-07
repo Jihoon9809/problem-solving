@@ -1,0 +1,63 @@
+import java.util.*;
+
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+        int answer = 0;
+        int count = 0;
+         
+        for(int i=0;i<lost.length;i++){
+            for(int j=0;j<reserve.length;j++){
+                
+                if(lost[i] == reserve[j]-1||lost[i] == reserve[j]||lost[i] == reserve[j]+1){
+                    count++;
+                    reserve[j] =-1;
+                    break;
+                }
+            }
+        }
+        
+        answer = n-lost.length+count; // 최소 수강 가능 인원 
+        return answer;
+    }
+}
+ // 여벌의 옷을 가져온 학생이 체육복을 도둑맞을 경우 자신에게 하나의 여벌옷을 빌려준 것으로 생각하여
+// if문을 자신 -1 자신 자신 +1 번 중 한명으로 생각했다. 하지만 자신이 도둑 맞을 경우 무조건 자신에게 빌려 주므로
+// 따로 분리하여 작성을 해야한다. 만약 자신은 체육복을 받지 못하고 남을 빌려주는 경우가 생기므로.
+.//// 처음
+import java.util.Arrays;
+
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+        int answer = 0;
+        int count = 0;
+
+        Arrays.sort(lost);
+        Arrays.sort(reserve);
+
+        for(int i=0;i<lost.length;i++){
+            for(int j=0;j<reserve.length;j++){
+            if(lost[i] == reserve[j]){
+                count++;
+                lost[i] = -1;
+                reserve[j] = -1;
+            }
+            }
+        }
+                
+        for(int i=0;i<lost.length;i++){
+            for(int j=0;j<reserve.length;j++){
+                
+                if(lost[i] == reserve[j]-1||lost[i] == reserve[j]+1){
+                    count++;
+                    reserve[j] =-1;
+                    break;
+                }
+            }
+        }
+        
+        answer = n-lost.length+count; // 최소 수강 가능 인원 
+        return answer;
+    }
+}
+
+// 변형
