@@ -1,0 +1,51 @@
+/////////////// 부스트 캠프 웹,모바일 자가진단 ///////////////////////
+/////////////// 함수구현//////////////////
+////////////// 6/14(목) 해설 안내/////////
+import java.util.ArrayList;
+import java.util.Arrays;
+
+class solution{
+    public int[] solution2(int[] arr){
+        int[] count = new int[100]; // arr 요소의 크기 1~100,arr 배열의 크기 1~100
+        int[] flag = new int[1]; // 중복값 이 없을 경우에 사용.
+        ArrayList<Integer> count_arr = new ArrayList<Integer>(); // count배열의 0,1 값 제거하기 위해.
+
+        for(int i=0 ; i<arr.length ; i++){
+            count[arr[i]] ++; // arr[i]의 요소 중복 체크.
+        }
+
+        for(int i=0;i<count.length;i++){
+            if(count[i] > 1) flag[0] ++; // 중복이 1개 이상일 경우 flag값 변경 solution2메소드가 배열을 반환하기에 배열로 생성.
+        }
+        if(flag[0] == 0) {
+            flag[0] = -1; //중복이 없는 경우 -1로 바꿈
+            return flag; 
+        }
+
+        for(int i=0;i<count.length;i++){
+            if(count[i] >1) count_arr.add(count[i]); //0,1값 제외하고 ArrayList에 삽입.
+        }
+
+        int[] answer = new int[count_arr.size()]; //ArrayList크기 만큼 생성.
+        for(int i=0;i<count_arr.size();i++){
+            answer[i] = count_arr.get(i); // 삽입.
+            //System.out.println(answer[i]);
+        }
+
+        return answer;
+    }
+}
+public class naver_boots {
+    public static void main(String[] args){
+        int[] arr = {1, 2, 3, 3, 3, 3, 4, 4};
+        int[] arr2 = {3, 2, 4, 4, 2, 5, 2, 5, 5};
+        int[] arr3 = {1,2,3,4,5,6};
+
+        solution a = new solution();
+        a.solution2(arr);
+        System.out.println(Arrays.toString(a.solution2(arr))); // [4,2]
+        System.out.println(Arrays.toString(a.solution2(arr2))); // [3,2,3] //Arrays.toString을 사용하지 않고 출력할 경우 주소값이 나온다.
+        System.out.println(Arrays.toString(a.solution2(arr3))); // [-1]
+    }
+}
+
