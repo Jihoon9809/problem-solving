@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Solution {
+    public int solution(int[] nums) {
+        int answer = 0;
+        ArrayList<Integer> array_int = new ArrayList<>();
+        
+        Arrays.sort(nums);
+        
+        array_int.add(nums[0]);
+        for(int i=0;i<nums.length-1;i++){
+            if(nums[i] != nums[i+1]) array_int.add(nums[i+1]);
+        }
+        //System.out.println(array_int.size());
+        //System.out.println(nums.length/2);
+        
+        if(array_int.size() > (nums.length/2)) {
+            answer = nums.length/2;
+            //System.out.println(answer);
+        }
+        else answer = array_int.size();
+        
+        
+        return answer;
+    }
+}
+
+// 중복제거 하려 if문을 사용하였지만 hashset을 사용한다면 코드를 간결하게 생성할 수 있을 것 같다.
