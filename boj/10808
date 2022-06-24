@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+    int count[26];
+    
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+   
+    string S;
+    cin>>S;
+    
+    for(auto c:S)
+        count[c-'a']++; // a~z까지 각 배열에 맞게 카운트
+    
+    for(int i=0;i<26;i++)
+        cout << count[i] << " "; // 출력
+}
+
+// sizeof(count) int 크기 * count의 개수 = 104
+// sizeof(count)/sizeof(int) 26
