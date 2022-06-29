@@ -1,0 +1,30 @@
+#include <iostream> 
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    int n,v;
+	cin >> n;
+	vector<int> arr;
+	int find[201] = {0};
+
+	for (int i = 0; i < n; i++) {
+		int a; 
+		cin >> a;
+		
+		arr.push_back(a);
+	}
+    
+	sort(arr.begin(), arr.end());
+
+	for (int i = 0; i < arr.size(); i++) {
+		find[100+arr[i]]++;
+	}
+
+	cin >> v;
+    cout << find[100+v];
+}
