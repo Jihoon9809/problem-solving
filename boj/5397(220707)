@@ -1,0 +1,57 @@
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int N = 0;
+	
+	cin >> N;
+	string *arr = new string[N];
+
+	for (int i = 0; i < N; i++) {
+		list <char> list1;
+		list <char> list2;
+		cin >> arr[i];
+
+		for (auto c : arr[i]) list1.push_back(c);
+		auto corsor = list1.end();
+		arr[i].clear();
+
+		for (auto c : list1) {
+			if (c == '<') {
+				if (list2.empty()) continue;
+				if (corsor != list2.begin()) {
+					corsor--;
+				}
+			}
+
+			else if (c == '>') {
+				if (list2.empty()) continue;
+				if (corsor != list2.end()) {
+					corsor++;
+				}
+			}
+
+			else if (c == '-') {
+				if(list2.empty()) continue;
+				corsor--;
+				corsor = list2.erase(corsor);
+			}
+
+			else {
+				if (list2.empty()) {
+					list2.push_back(c);
+					corsor = list2.end();
+					}
+				else list2.insert(corsor, c);
+			}	
+		}
+		for (auto c : list2) 	arr[i].push_back(c);
+	}
+	for (int i = 0; i < N; i++) {
+		cout << arr[i] << "\n";
+	}
+}
+// 실패
