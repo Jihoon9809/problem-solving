@@ -55,3 +55,51 @@ int main() {
 	}
 }
 // 실패
+N이 2일 경우 문장 2개를 읽은 후 2개의 결과화면을 나타내야 하는 줄 알고 배열을 활용해 한번에 출력 하는 것으로 생성하였다 하지만 오류가 발생하였다.
+--> 한 문장을 읽고 결과를 나타내는 방식으로 수정하여 동적배열을 사용하지 않고 string을 사용했다.
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int N;
+	
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+		list <char> list1 = {};
+		string sentence;
+		auto corsor = list1.begin();
+		
+		cin >> sentence;
+		for (auto c : sentence) {
+			if (c == '<') {
+				if (corsor != list1.begin()) {
+					corsor--;
+				}
+			}
+
+			else if (c == '>') {
+				if (corsor != list1.end()) {
+					corsor++;
+				}
+			}
+
+			else if (c == '-') {
+				if (corsor != list1.begin()) {
+					corsor--;
+					corsor = list1.erase(corsor);
+				}
+			}
+
+			else {
+				list1.insert(corsor, c);
+			}
+		}
+		for (auto c : list1) cout << c;
+		cout << "\n";
+	}
+}
+//성공
