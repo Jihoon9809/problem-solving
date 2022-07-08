@@ -1,0 +1,39 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n;
+	stack<int> a;
+
+	cin >> n;
+	while (n--) {
+		string option;
+		cin >> option;
+		if (option == "push") {
+			int num;
+			cin >> num;
+			a.push(num);
+		}
+		if (option == "pop") {
+			if (a.empty()) cout << - 1 << "\n";
+			else {
+				cout << a.top() << "\n";
+				a.pop(); //출력과 순서가 바뀔시 오류.
+			}
+		}
+		if (option == "size") {
+			cout << a.size() << "\n";
+		}
+		if (option == "empty") {
+			if (a.empty()) cout << 1 << "\n";
+			else cout << 0 << "\n";
+		}
+		if (option == "top") {
+			if (a.empty()) cout << - 1 << "\n";
+			else cout << a.top() << "\n";
+		}
+	}
+}
