@@ -1,0 +1,26 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n,sum =0;
+	cin >> n;
+
+	stack<int> a;
+
+	while (n--) {
+		int num;
+		cin >> num;
+
+		a.push(num);
+		sum += a.top();
+		if (num == 0 ) {
+			a.pop();
+			sum -= a.top();
+			a.pop();
+		}
+	}
+	cout << sum;
+}
