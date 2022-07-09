@@ -1,0 +1,43 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n, range;
+
+	cin >> n;
+	range = n-2;
+
+	stack <int> s;
+	int* arr = new int[n];
+	
+	for (int i = 0; i < n; i++) {
+		int num;
+		cin >> num;
+		arr[i] = num;
+	}
+	
+	for (int i = n-1; i >= 0; i--) {
+		int count = 0;
+		for (int j = range; j >= 0; j--) {
+			if (arr[i] < arr[j]) {
+				//cout << arr[i] <<"  " << arr[j];
+				s.push(j+1);
+				count++;
+				break;
+			}
+		}
+		//cout << "\n" << "-----------" << "\n";
+		if (count == 0) s.push(0);
+		range--;
+	}
+
+	while (n--) {
+		cout << s.top() << " ";
+		s.pop();
+	}
+}
+////// 시간 초과////////////
