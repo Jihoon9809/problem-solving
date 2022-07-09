@@ -1,0 +1,59 @@
+#include <iostream>
+#include <list>
+#include <stack>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n;
+	string res;
+
+	cin >> n;
+
+	stack <int> s;
+	list <int> li;
+	for (int i = 0; i < n; i++) {
+		int num;
+		cin >> num;
+		li.push_back(num);
+	}
+	auto control = li.begin();
+	
+	for (int i = 1; i <= n; i++) {
+		if (s.empty()) {
+			s.push(i);
+			res.push_back('+');
+		}
+		else if (s.top() == (*control)) {
+			s.pop();
+			control++;
+			res.push_back('-');
+			i--;
+			//cout << "-" << "\n";
+		}
+		else {
+			s.push(i);
+			res.push_back('+');
+			//cout << "+" << "\n";
+		}
+	}
+
+	for (int i = 0; i < s.size(); i++) {
+		if (s.top() == (*control)) {
+		s.pop();
+		control++;
+		res.push_back('-');
+		i--;
+		//cout << "-" << "\n";
+		}
+	}
+
+
+	if (s.empty()) {
+		for (auto c : res) cout << c << "\n";
+	}
+	else cout << "NO";
+}
+
+//// 성공 더 간결하게 수정할 수 있을거 
