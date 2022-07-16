@@ -1,0 +1,56 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	int n,res=0;
+
+	cin >> n;
+	stack<int> s;
+	for (int i = 0; i < n; i++) {
+		int num;
+		cin >> num;
+		res += s.size();
+		while (!s.empty()) {
+			if (s.top() < num) s.pop();
+			else break;
+		}
+		s.push(num);
+	}
+
+	cout << res;
+} 
+
+// 예제의 결과는 출력 가능.
+// 2 2 2 1 , 2 2 2 5는 결과 값이 다르게 나온다 하지만 크기로 계산을 할 경우 예외를 처리하지 못 하기 때문에 방식을 바꿨다.
+// 500,000 개의 n이므로 1초의 시간을 만족하기 위해서 o(n)시간복잡도로 풀이를 해야한다.
+// 같은 수가 반복 될 경우 반복되는 수 뒤에 큰수 혹은 작은수가 오는 경우를 생각해야 한다. 해당 부분이 의외로 힘들었다.
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n;
+	long long res =0;
+
+	cin >> n;
+	stack <pair<int, int>> s;
+
+	for (int i = 0; i < n; i++) {
+		int h, count = 1;
+		cin >> h;
+		while (!s.empty() &&s.top().first <= h) {
+			if (s.top().first == h) count += s.top().second;
+			res += s.top().second;
+			s.pop();
+		}
+		if(!s.empty()) res++;
+		s.push({ h,count });
+		//cout << "\n" << res << "\n";
+	}
+
+	cout << res;
+}
