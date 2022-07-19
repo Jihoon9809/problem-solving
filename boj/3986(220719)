@@ -1,0 +1,27 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n ,cnt =0;
+	cin >> n;
+
+	while (n--) {
+		string str;
+
+		cin >> str;
+
+
+		stack <int> s;
+		for (auto a : str) {			
+			if (s.empty())	s.push(a);
+			else if (s.top() != a) s.push(a);
+			else s.pop();
+		}
+		if (s.empty()) cnt++;
+	}
+	cout << cnt;
+}
