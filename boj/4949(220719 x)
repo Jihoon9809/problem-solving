@@ -1,0 +1,32 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	while (1) {
+		string s;
+		stack<int> st;
+
+		getline(cin, s);
+		if (s == ".") break;
+
+		for (auto a : s) {
+			if (a == '(' || a == '[') {
+				st.push(a);
+			}
+			else if (a == ')') {
+				if (!st.empty() && st.top() == '(') st.pop();
+			}
+				else if (a == ']') {
+				if (!st.empty() && st.top() == '[') st.pop();
+			}
+		}
+		if (st.empty()) cout << "yes" <<"\n";
+		else cout << "no" << "\n";
+	}
+}
