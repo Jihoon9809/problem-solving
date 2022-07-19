@@ -1,0 +1,36 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+
+	while (n--) {
+		string str;
+		cin >> str;
+
+		bool value = true;
+		stack <char> s;
+
+		for (auto a : str) {
+			if (a == '(') s.push(a);
+			else {
+				if (s.empty() || s.top() != '(') {
+					value = false;
+					break;
+				}
+				s.pop();
+			}
+
+		}
+
+		if (!s.empty()) value = false;
+		if(value) cout << "YES" << "\n";
+		else cout << "NO" << "\n";
+	}
+}
+// 문제의 출력 예시를 정확히 보지 안음.
+// break를 통해 시간 복잡도 개선.
+// )이 먼저 들어올 경우 뒤의 입력은 볼 필요가 없다.
+// 입력 값이 )이 있을 경우 종료..
