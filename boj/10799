@@ -1,0 +1,41 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int res=0;
+
+	string str;
+	cin >> str;
+	
+	char before;
+	
+	stack<int> s;
+	for (auto a : str) {
+		if (a == '(') s.push(a);
+
+		else {
+			if (before != '(') {
+				s.pop();
+				res++;
+			}
+			else {
+				s.pop();
+				res += s.size();
+			}
+		}
+
+		before = a;
+	}
+	cout << res;
+}
+
+// 문장을 입력받은 후 문장의 크기만큼 반목문 수행.
+// '('일 경우 스택에 삽입
+// ')'일 경우'()' 바로 닫힐 경우 레이저, 막대를 ))가 입력 될 경우 막대로 구분한다.
+// 막대와 레이저를 구분하기 위해 before변수를 통해 확인한다.
+// 레이저가 나타날 경우 ( 개수를 결과에 합친다.
+// ))일 경우 해당 막대가 끝나는 것이므로 +1만 해준다.
