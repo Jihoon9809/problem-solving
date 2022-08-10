@@ -1,0 +1,34 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int bord[502][502]; // 행열.
+bool vis[502][502]; // 이동여부 확인
+int dx[4] = { 1,0,-1,0 }; // 행의 아래(1) 위(-1) 이동하기 위해 선언.
+int dy[4] = { 0,1,0,-1 }; // 열의 왼쪽(1) 오른쪽(-1)으로 이동하기 위해 선언.
+// dx, dy에 저장된 배열 값이 다른 이유는 특정 기준이 되는 좌표에서 상하좌우 한칸을 검사하기 위해서 이다.
+// 만약 dx =1, dy = 1이라면 오른쪽 한번 아래로 한번 2번의 이동이 발생하므로 두칸을 이동하게 된다.
+// 따라서 배열의 값을 다르게 저장한다.
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int x = 6, y = 4; // 행,열의 크기.
+	queue <pair<int, int>> Q; // 행,열을 저장하기 위해 pair을 통해 x,y좌표를 저장하기 위해 선언.
+	vis[0][0] = 1; //첫 0,0의 좌표에 들어갔으므로 1로 초기화.
+	Q.push({ 0,0 }); // 첫 좌표에 들어가 1로 초기화 되었으므로 while 문을 실행하기 위해 Q에 저장.
+
+	while (!Q.empty()) {
+		pair<int, int> cur = Q.front(); // current를 통해 현재위치 저장.(Q에 저장된 위치.)
+		Q.pop(); // cur에 저장하였으므로 해당 저장된 Queue삭제.
+		for (int i = 0; i < 4; i++) { // 4번의 반복을 통해 상하좌우값
+			int nx = cur.first + dx[i]; 
+			int ny = cur.second + dy[i];
+			if (nx <0 || nx>x || ny <0 || ny>y) continue; // 보드의 범위를 벗어나지 안게 설정.
+			if (vis[nx][ny] || bord[nx][ny] != 1) continue; // 만약 방문한 곳을 또 방문하거나, 보드 위에 값이 없을 경우.
+			vis[nx][ny] = 1; // 위의 조건을 만족하여 저장.
+			Q.push({ nx,ny }); // while문을 반복하기 위해 위의 조건을 만족하는 경우 저장.
+		}
+	}
+}
