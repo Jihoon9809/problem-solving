@@ -1,0 +1,47 @@
+//최단거리 경로를 찾기 때문에 한번에 상하좌우 모두 검사를 하는 BFS를 사용하였다.
+
+#include <iostream>
+#include <queue>
+#include <string>
+using namespace std;
+
+string bord[101];
+int vis[101][101];
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n, m;
+	cin >> n >> m;
+
+	for (int i = 0; i < n; i++) 	cin >> bord[i]; // string은 한줄 단위로 받기 때문에 행의 갯수 만큼 받아서 저장하면 된다.
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			vis[i][j] = -1; // 모두 음수로 변환하여 거리를 계산하기 위해.
+		}
+	}
+
+
+			queue<pair<int, int>> q;
+			q.push({ 0,0 }); //문제에서 (1,1) 부터 (ㅜ,ㅡ)까지의 최단경로를 말하였기 때문에 처음 수는 무조건 포함이 되어 삽입을 한다.
+			vis[0][0] = 0; 
+
+			while (!q.empty()) {
+				pair<int, int> cur = q.front();
+				q.pop();
+				for (int i = 0; i < 4; i++) {
+					int nx = dx[i] + cur.first;
+					int ny = dy[i] + cur.second;
+					if (nx >= n || nx < 0 || ny >= m || ny < 0)		continue;
+					if (vis[nx][ny] >= 0 || bord[nx][ny] != '1') 	continue;
+
+					vis[nx][ny] = vis[cur.first][cur.second] + 1; //처음 칸수로 부터 이동할때마다 +1을 더하는 이유는 마지막의 수를 거리로 사용하기 위해서 이다. 
+					q.push({ nx,ny });
+				}
+			}
+	cout << vis[n-1][m-1]+1;
+}
