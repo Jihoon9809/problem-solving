@@ -1,0 +1,52 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+int dist[100002];
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	
+	int n, m;
+	cin >> n >> m;
+
+	for (int i = 0; i < 100000; i++) {
+		dist[i] = -1;
+	}
+	dist[n] = 0;
+
+	queue<int> q;
+	q.push(n);
+	
+	while (dist[m] == -1) {
+		int cur = q.front();
+		q.pop();
+		
+		int plus = cur+1;
+		int subtract = cur-1;
+		int multiply = cur*2;
+
+		if (plus > 0 || plus < 100000) {
+			if (dist[plus] == -1) {
+			dist[plus] = dist[cur] + 1;
+			q.push(plus);
+			}
+		}
+		if (subtract > 0 || subtract < 100000) {
+			if(dist[subtract] == -1){
+				dist[subtract] = dist[cur] + 1;
+				q.push(subtract);
+			}
+		}
+		if (multiply > 0 || multiply < 100000) {
+			if (dist[multiply] == -1){
+				dist[multiply] = dist[cur] + 1;
+				q.push(multiply);
+			}
+		}		
+	}
+	cout << dist[m];
+}
+////////////////////////////////////// 정답은 알맞게 나오지만 체점과정 중 런타임에러(OutOfBound)가 발생한다.
