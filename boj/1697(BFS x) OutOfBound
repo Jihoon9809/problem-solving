@@ -50,3 +50,41 @@ int main() {
 	cout << dist[m];
 }
 ////////////////////////////////////// 정답은 알맞게 나오지만 체점과정 중 런타임에러(OutOfBound)가 발생한다.
+///////////////////////////////////// 바킹독 유튜브를 참고하여 문제를 해결 하였다.
+///////////////////// dist의 크기를 1증가 시켰으며 if문으로 비교했던 문장들을 for range based를 활용하여 줄였다.
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+int dist[100002];
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n, m;
+	cin >> n >> m;
+
+	for (int i = 0; i < 100001; i++) {
+		dist[i] = -1;
+	}
+	dist[n] = 0;
+
+	queue<int> q;
+	q.push(n);
+
+	while (dist[m] == -1) {
+		int cur = q.front();
+		q.pop();
+
+		for (int change : {cur - 1, cur + 1, cur * 2}) {
+			if (change < 0 || change>100000) continue;
+			if (dist[change] != -1) continue;
+			dist[change] = dist[cur] + 1;
+			q.push(change);
+		}
+	}
+	cout << dist[m];
+}
