@@ -1,0 +1,77 @@
+#include<iostream>
+#include<queue>
+#include <tuple>
+
+using namespace std;
+
+int board[101][101][101];
+int vis[101][101][101];
+int dz[6] = { 0,0,0,0,1,-1 };
+int dx[6] = { 1,0,-1,0,0,0 };
+int dy[6] = { 0,1,0,-1,0,0 };
+
+
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int m, n, h, max = 0; // m=열(column), n= 행(row);
+	cin >> m >> n >> h;
+
+	queue<tuple<int, int, int>> q; // 3개의 값을 가질 수 있음. 높이, 행, 열 순서.
+
+	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < m; k++) {
+				cin >> board[i][j][k];
+				if (board[i][j][k] == 1) {
+					vis[i][j][k] = 1;
+					q.push({ i,j,k });
+				}
+				if (board[i][j][k] == 0) vis[i][j][k] = -1;
+			}
+		}
+	}
+					//cout << i << j << k;
+					while (!q.empty()) {
+						tuple<int, int, int> cur = q.front();
+						q.pop();
+						if (max < vis[get<0>(cur)][get<1>(cur)][get<2>(cur)]) max = vis[get<0>(cur)][get<1>(cur)][get<2>(cur)];
+						//cout << get<0>(cur)<<get<1>(cur)<<get<2>(cur) <<"\n";
+						for (int i = 0; i < 6; i++) {
+							int nx = dx[i] + get<1>(cur);
+							int ny = dy[i] + get<2>(cur);
+							int nz = dz[i] + get<0>(cur);
+							if (nx >= n || nx < 0 || ny >= m || ny < 0 || nz >= h || nz < 0) continue;
+							if (vis[nz][nx][ny] >= 0) continue;
+							q.push({ nz,nx,ny });
+							vis[nz][nx][ny] = vis[get<0>(cur)][get<1>(cur)][get<2>(cur)] + 1;
+						}
+					}
+				
+/*	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < m; k++) {
+				cout << vis[i][j][k];
+			}
+			cout << "\n";
+		}
+	}*/
+		for (int i = 0; i < h; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int k = 0; k < m; k++) {
+					if (vis[i][j][k] == -1) {
+						cout << -1;
+						return 0;
+					}
+				}
+			}
+		}
+		if (max == 0) cout << max;
+		else cout << max-1;
+}
+
+// board의 0을 -1로 바꾸지 않고 문제를 해결하며 for문을 많이 사용하여 시간초과가 나온거 같다.
+// 이후 board의 0을 -1로 변경하여 for문의 개수를 줄였다.
+// 마지막 줄의 max를 출력하는 과정에서 0과 0이 아닌 수를 분리하여 개수를 체크하였지만 board를 입력받을 때 0일 경우 vis에 -1을 추가하고 1의 경우 추가 하지않고 queue에 바로 삽입하여
+// vis의 값이 0부터 시작하도록 하면 max를 분리하여 출력할 필요가 없다.
