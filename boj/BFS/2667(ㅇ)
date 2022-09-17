@@ -1,0 +1,58 @@
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+string board[26];
+int vist[26][26];
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n, count =0;
+	cin >> n;
+	
+	for (int i = 0; i < n; i++) {
+		cin >> board[i];
+	}
+
+	queue<pair<int, int>> q;
+	vector<int> res;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (board[i][j] == '0' || vist[i][j] == 1) continue;
+			q.push({ i,j });
+			vist[i][j] = 1;
+			count++;
+		
+			int res_count=1;
+
+			while (!q.empty()){
+				pair<int, int> cur = q.front();
+				q.pop();
+				for (int i = 0; i < 4; i++) {
+					int nx = dx[i] + cur.first;
+					int ny = dy[i] + cur.second;
+					if (nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
+					if (vist[nx][ny] == 1 || board[nx][ny] == '0') continue;
+					q.push({ nx,ny });
+					vist[nx][ny] = 1;
+					res_count++;
+				}
+		}
+			res.push_back(res_count);
+		}
+	}
+	cout << count << "\n";
+	sort(res.begin(), res.end());
+	for (auto a : res) cout << a << "\n";
+}
+
+//////////////40분 처음으로 한번에 성공했다.
