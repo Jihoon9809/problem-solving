@@ -1,0 +1,42 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+int board[1000001] ;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int f, s, g, u, d;
+	
+	cin >> f >> s >> g >> u >> d;
+	
+	for (int i = 0; i < 1000001; i++) board[i] = -1;
+
+	queue<int> q;
+	board[s] = 0;
+	q.push(s);
+
+	int dx[2] = { u,-d };
+
+	while (!q.empty()) {
+		int cur = q.front();
+		q.pop();
+		
+		for (int i = 0; i < 2; i++) {
+			int next = cur + dx[i];
+			if (next > f || next <= 0) continue;
+			if (board[next] != -1) continue;
+			q.push(next);
+			board[next] = board[cur] + 1;
+		}
+	}
+	if (board[g] != -1) cout << board[g];
+	else cout << "use the stairs";
+}
+
+/////////////////
++1)변수를 정확히 사용하지 않아 실패하였다.
++2) dx[2]를 통해 증감을 잘못 설정하였다. next의 경우 cur + dx[i]로 되어있어 down을 클릭할 때 -로 변환을 해줘야한다.
