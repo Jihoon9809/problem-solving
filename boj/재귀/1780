@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+int board[2200][2200];
+int res[3];
+
+bool find(int row, int col, int n) {
+	
+	int start = board[row][col];
+
+	for (int i = row; i < row+n; i++) {
+		for (int j = col; j < col+n; j++) {
+			if (board[i][j] != start) return false;
+		}
+	}
+	return true;
+}
+void divide(int row, int col, int n) {
+	// 체크 ture res[board[i][j]+1] ++;
+
+		// 체크 false --> 나누기.
+		
+	if (find(row, col, n)) {
+		res[board[row][col] + 1]++;
+		return;
+	}
+				else {
+					int size = n / 3;
+					
+					for (int i = 0; i < 3; i++) {
+						for (int j = 0; j < 3; j++) {
+							divide(row + size * i, col + size * j, size);
+						}
+					}
+				}
+}
+
+int main() {
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> board[i][j];
+		}
+	}
+
+	divide(0, 0, n);
+	cout << res[0] << "\n" << res[1] << "\n" << res[2];
+}
