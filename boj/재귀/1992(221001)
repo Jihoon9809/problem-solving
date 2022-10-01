@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string board[65];
+
+bool check(int row,int col, int n) {
+	for (int i = row; i < row + n; i++) {
+		for (int j = col; j < col + n; j++) {
+			if (board[row][col] != board[i][j]) return false;
+		}
+	}
+	return true;
+}
+
+void divide(int row, int col, int n) {
+	if (check(row, col, n)) {
+		cout << board[row][col];
+		return ;
+	}
+	else {
+		cout << "(";
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+				divide(row + i * n / 2, col + j * n / 2, n / 2);
+			}
+			
+		}
+		cout << ")";
+	}
+}
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> board[i];
+	}
+
+	divide(0,0,n);
+}
+
+// 재귀함수 처음으로 정확히 풀었다.
+28분/ 성공(1)
+
+문제의 "("를 찍는 과정이 해깔려 시간이 오래 걸렸다.
+재귀함수에 들어가기 전에 괄호를 출력하면 되는 문제이지만, 이중 for문을 들어가게 되면 해당 면적에 계산을 계속해서 반복하는 것으로 이중 for문을 들어가기 전에 "("를 출력하는 것이 정확하다.
+
