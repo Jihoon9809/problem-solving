@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+int arr[1000001];
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		int num;
+		cin >> num;
+		arr[num]++;
+	}
+
+	for (int i = 1; i < 1000001; i++) {
+		while (arr[i]) {
+			cout << i << "\n";
+			arr[i] --;
+		}
+	}
+}
+
+시간제한 5초
+메모리제한 8
+해당 조건으로 인해 머지소트, 퀵소트를 사용하지 못한다.
+
+따라서 입력을 받을때 해당 배열의 값을 증가시키고
+0이 아니라면 반복문을 통해 해당배열의 i값을 출력한다.
