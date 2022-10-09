@@ -1,0 +1,37 @@
+#include <iostream>
+#include<vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int n;
+string st;
+vector<long long> v;
+
+int main(void) {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> st;
+        reverse(st.begin(), st.end());
+        v.push_back(stoll(st));
+    }
+    sort(v.begin(), v.end());
+    for (auto i : v) cout << i << '\n';
+    return 0;
+}
+
+/////////////
+실버4의 문제 이지만 어려운 문제였다.
+특히 역순으로 정렬하는 부분과 string을 int/long long으로 변환하는 과정이 어려웠다.
+다른 사람이 작성한 코드를 보며 어떻게 풀이하는지 이해하였다.
+
+처음 n을 입력 받는다.
+문자열을 입력받으면 reverse( #include <algorithm> ) 함수를 활용하여 문자열을 뒤집어(역순) 준다.
+이후 vector에 저장하는데 저장할 때 stoll( #include <string> )을 통하여 string to long long, 문자열을 정수로 변환한다.
+위의 과정 n번 반복
+
+이후 정렬을 해준다. 
+for each를 통해 vector에 대입된 원소를 모두 출력한다.
