@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <tuple>
+#include <algorithm>
+
+using namespace std;
+
+vector <tuple<int, int, int,string>> v;
+
+int main() {
+	int n, k, y, s;
+	string name;
+
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> name >> k >> y >> s;
+		v.push_back({-k,y,-s,name });
+	}
+	sort(v.begin(), v.end());
+
+	for (auto a : v) cout << get<3>(a) << "\n";
+}
+
+
+해당 문제는 튜플을 정하는 순서가 중요하다 .
+해당 문제의 조건은 국어,영어,수학 순서로 비교하여 조건에 맞게 이름을 출력하는 것이다.
