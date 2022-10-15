@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() { 
+	int test_case = 5;
+
+	while (test_case--) {
+		string n;
+		cin >> n;
+
+		if (stoi(n.substr(4, 2)) <= 0 || stoi(n.substr(4, 2)) > 12) cout << "#" << test_case << " " << -1 << "\n";
+		else if (n.substr(4, 2) == "02") {
+			if (stoi(n.substr(6, 2)) < 29) cout << "#" << test_case << " " << n.substr(0, 4) << "/" << n.substr(4, 2) << "/" << n.substr(6, 2) << "\n";
+			else cout << "#" << test_case << " " << -1 << "\n";
+		}
+
+		else if (stoi(n.substr(4, 2)) % 2 == 0) {
+			if (stoi(n.substr(6, 2)) < 32)	cout << "#" << test_case << " " << n.substr(0, 4) << "/" << n.substr(4, 2) << "/" << n.substr(6, 2) << "\n";
+			else cout << "#" << test_case << " " << -1 << "\n";
+		}
+
+		else {
+			if (stoi(n.substr(6, 2)) < 31)	cout << "#" << test_case << " " << n.substr(0, 4) << "/" << n.substr(4, 2) << "/" << n.substr(6, 2) << "\n";
+			else cout << "#" << test_case << " " << -1 << "\n";
+		}
+	}
+}
