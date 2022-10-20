@@ -1,0 +1,46 @@
+#include <iostream>
+
+using namespace std;
+
+int board[65][65];
+
+
+bool check(int col, int row, int n) {
+	for (int i = col; i < col + n; i++) {
+		for (int j = row; j < row + n; j++) {
+			if (board[col][row] != board[i][j]) return false;
+		}
+	}
+	return true;
+}
+
+void recursion(int col, int row, int n) {
+	if (check(col, row, n)) cout << board[col][row];
+
+	else {
+		cout << "(";
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+				recursion(col+(i *n) / 2, row+(j *n) / 2, n / 2);
+			}
+		}
+		cout << ")";
+	}
+
+}
+
+int main() {
+	int n, col=0, row=0 ,T;
+	cin >> T;
+	while (T--) {
+		cin >> n;
+
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++) cin >> board[i][j];
+
+
+		recursion(0, 0, n);
+		cout << "\n";
+	}
+
+}
