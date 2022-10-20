@@ -1,0 +1,102 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+	vector<pair<int,int>> v1, v2, v3, list;
+
+	int n, res=0;
+	cin >> n;
+
+	while (n--) {
+		int start, end;
+		cin >> start >> end;
+		
+		list.push_back({ start, end });
+	}
+	
+	sort(list.begin(), list.end());
+	
+
+//	for (auto a : list) cout << a.first << " " << a.second << "\n";
+	while (!list.empty()) {
+
+		if (v1.empty()) {
+			v1.push_back({ list[0].first,list[0].second });
+			res++;
+		}
+		else if (v1[v1.size() - 1].second <= list[0].first) {
+			v1.push_back({ list[0].first,list[0].second });
+			res++;
+		}
+
+		else if (v2.empty()) {
+			v2.push_back({ list[0].first,list[0].second });
+			res++;
+		}
+		else if (v2[v2.size() - 1].second <= list[0].first) {
+			v2.push_back({ list[0].first,list[0].second });
+			res++;
+		}
+
+		else if (v3.empty()) {
+			v3.push_back({ list[0].first,list[0].second });
+			res++;
+		}
+		else if (v3[v3.size() - 1].second <= list[0].first) {
+			v3.push_back({ list[0].first,list[0].second });
+			res++;
+		}
+		
+		list.erase(list.begin(), list.begin() + 1);
+	}
+
+	cout << res;
+}
+
+/////////////////////////////////// 50% 틀림//////////////////////////////////
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+pair<int, int> s[100005];
+
+int main() {
+
+	int n, res=0;
+	int v1=0, v2=0, v3=0;
+	
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> s[i].second >> s[i].first;
+	}
+	
+	sort(s, s+n);
+//	for (int i = 0; i < n; i++) cout << s[i].first << " " << s[i].second << "\n";
+
+	for (int i = 0; i < n; i++) {
+		if (v1 <= s[i].second) {
+			res++;
+			v1 = s[i].first;
+		}
+		else if (v2 <= s[i].second) {
+			res++;
+			v2 = s[i].first;
+		}
+		else if (v3 <= s[i].second) {
+			res++;
+			v3 = s[i].first;
+		}
+	}
+	
+	cout << res;
+}
