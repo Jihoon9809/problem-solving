@@ -128,3 +128,146 @@ int main() {
 //	for (auto a : res) cout << get<2>(a) << " ";
 	
 }
+
+
+
+/////////////////////////////////////////// 여러번 실패
+
+#include <iostream>
+#include <algorithm>
+#include <math.h>
+#include <tuple>
+#include <vector>
+
+using namespace std;
+
+pair<int, int> arr[20002];
+//tuple<pair<int, int>, pair<int, int>, int> t0[2];
+tuple<int, int, int,int, int> t;
+tuple<int, int, int,int, int> l_t;
+tuple<int, int, int,int, int> r_t;
+
+vector<tuple<int, int, int,int,int>> res;
+
+int n;
+// 두 점 사이의 거리 : sqrt(pow(x1-x2) + pow(y1-y2),2);
+
+int compare(pair<int, int> a, pair<int, int> b) {
+	return a.second < b.second;
+}
+
+int res_compare(tuple<int, int,int,int,int > a, tuple<int,int,int,int, int> b) {
+	return get<4>(a) < get<4>(b);
+}
+
+int closest(int st, int ed, int min_d) {
+	sort(arr, arr + n, compare); // y축으로 재 정렬.
+
+	for (int i = st; i < ed+1; i++) { // st=0 ed=4 ->. 0-> 1234 1->234 2->34 3->4 4->4 //i <= ed 할 경우 같은 값 비교함. 에러.
+		for (int j = i + 1; j < ed+1; j++) {
+			if (arr[j].first - arr[i].first > min_d) break; // y축 기준으로 정렬 되어있으므로 해당 i값의 j랑 비교 의미 x
+
+			int temp = sqrt(pow(arr[i].first - arr[j].first, 2) + pow(arr[i].second - arr[j].second, 2));
+			min_d = min(min_d, temp);
+			
+			if (min_d == temp) {
+				res.push_back(make_tuple( arr[i].first, arr[i].second, arr[j].first, arr[j].second, temp ));
+			}
+		}
+
+	}
+	return min_d;
+}
+
+
+int func(int st,int ed) {
+	int point = ed - st +1; // func (0, 2) // 0,1,2 --> plus +1
+	
+	if (point == 2) {
+		int dist = sqrt(pow(arr[st].first - arr[ed].first, 2) + pow(arr[st].second - arr[ed].second, 2));
+		t = make_tuple(arr[st].first,arr[st].second,arr[st+1].first,arr[st+1].second,dist);
+		return get<4>(t);
+	}
+	else if (point == 3) {
+	int p1 = sqrt(pow(arr[st].first - arr[st+1].first, 2) + pow(arr[st].second - arr[st+1].second, 2)); // 첫번째 점 , 두번째 점 거리
+	int p2 = sqrt(pow(arr[st].first - arr[st+2].first, 2) + pow(arr[st].second - arr[st+2].second, 2)); // 첫번째 점 , 세번째 점 거리
+	int p3 = sqrt(pow(arr[st+1].first - arr[st+2].first, 2) + pow(arr[st+1].second - arr[st+2].second, 2)); // 두번째 점 , 세번째 점 거리
+
+	if (min({p1,p2,p3}) == p1) {
+		t = make_tuple( arr[st].first,arr[st].second,arr[st + 1].first,arr[st + 1].second, p1 );
+		
+		return min({ p1, p2, p3 });
+	}
+	else if(min({p1,p2,p3}) == p2){
+		t = make_tuple( arr[st].first,arr[st].second,arr[st + 1].first,arr[st + 1].second, p2);
+
+		return min({ p1, p2, p3 });
+	}
+	else if (min({ p1,p2,p3 }) == p3) {
+		t = make_tuple( arr[st].first,arr[st].second,arr[st + 1].first,arr[st + 1].second, p2 );
+
+		return min({ p1, p2, p3 });
+	}
+	//return min({ p1, p2, p3 }); // min({1,2,3})--> // o min({1,2},3)--> x
+	}
+
+	else {
+		int mid = (st + ed)/2; // func(st, (st+ed)/2)로 설정 하면 무한 루프 빠짐.
+		int min_st = func(st, mid); //ex 0,2
+		l_t = make_tuple( get<0>(t),get<1>(t),get<2>(t),get<3>(t),get<4>(t) );
+		int min_ed = func(mid + 1, ed); //ex 4,6
+		r_t = make_tuple( get<0>(t),get<1>(t),get<2>(t),get<3>(t),get<4>(t) );
+		
+		int min_d = min(min_st, min_ed);
+
+		if (min_d == min_st) {
+			res.push_back(make_tuple( get<0>(l_t),get<1>(l_t),get<2>(l_t),get<3>(l_t),get<4>(l_t) ));
+		}
+		else {
+			res.push_back(make_tuple( get<0>(r_t),get<1>(r_t),get<2>(r_t),get<3>(r_t),get<4>(r_t) ));
+		}
+
+		return closest(st,ed,min_d);
+	}
+
+}
+
+
+
+
+
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i].first >> arr[i].second;
+	}
+	//sort(arr, arr + n);
+	//cout << "'''''''''''''''" << "\n";
+	//for (int i = 0; i < n; i++) cout << arr[i].first << " " << arr[i].second << "\n";
+	
+	
+	//sort(arr, arr + n, compare);
+
+	func(0,n-1);
+	sort(res.begin(), res.end(), res_compare);
+
+	
+	cout << "(" << get<0>(res[0]) << ", " << get<1>(res[0]) << ") " << "(" << get<2>(res[0]) << ", " << get<3>(res[0]) << ") " << "\n";
+
+//	cout << "'''''''''''''''" << "\n";
+//	for (int i = 0; i < n; i++) cout << arr[i].first << " " << arr[i].second << "\n";
+
+/*	for (int i = 0; i < res.size(); i++) {
+		cout << "(" << get<0>(res[i]) << ", " << get<1>(res[i]) << ") " << "(" << get<2>(res[i]) << ", " << get<3>(res[i]) << ") " << get<4>(res[i]) << "\n";
+	} */
+
+//	for (auto a : res) cout << get<4>(a) << "\n";
+//	cout << "\n";
+//	for (auto a : res) cout << get<2>(a) << " ";
+	
+}
