@@ -271,3 +271,156 @@ int main() {
 //	for (auto a : res) cout << get<2>(a) << " ";
 	
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ x 좌표의 값이 작은 좌표를 먼저 출력하고, 만약 x 좌표의 값이 같을 경우에는 y 좌표값이 작은 것을 먼저 출력한다
+ --> x (100,71) (100, 16) 일경우 (100,16) (100,71) 말 인거 같은데 틀림. 
+ 솔찍히 어디서 틀린지 아직 모르겟따.......
+ 
+ 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+struct Point {
+    long long x;
+    long long y;
+
+    bool operator < (const Point& b) const { //구조체를 사용하여 정렬할때 무엇을 기준으로 할지 오버로딩 한다.
+        if (x == b.x)  return y < b.y;
+        return x < b.x;
+    }
+};
+
+long long distance(Point a, Point b) {
+    return pow(a.x - b.x, 2) + pow(a.y - b.y, 2);
+}
+
+bool compareY(Point a, Point b) {
+    return a.y < b.y;
+}
+
+bool res_compere(Point a, Point b) {
+    if (a.x == b.x) return a.y < b.y;
+
+    return a.x < b.x;
+
+}
+
+vector<Point> l_st;
+vector<Point> l_ed;
+
+vector<Point> res1;
+vector<Point> res2;
+
+int cmp(vector<Point>& v, int start, int end, vector<Point>& st, vector<Point>& ed) {
+
+    int min = 0;
+
+    for (int i = start; i <= end - 1; i++) {
+        for (int j = i + 1; j <= end; j++) {
+
+            int dist = distance(v[i], v[j]);
+
+            if (min == 0 || min > dist) {
+                min = dist;
+
+                //    cout << st[0].x <<" "<< st[0].y << "  " << ed[0].x <<" " << ed[0].y << "\n";
+            }
+        }
+    }
+    return min;
+}
+
+
+int closest(vector<Point>& v, int start, int end, vector<Point>& st, vector<Point>& ed) {
+    int count = end - start + 1;
+
+    if (count <= 3) // 2,3 개수 같이 하지않으면  x,y값 처리 어려움.
+        return cmp(v, start, end, st, ed);
+
+    int mid = (start + end) / 2; // mid 변수 생성 하지않으면 무한루프
+    int left = closest(v, start, mid, st, ed);
+     // left의 좌표 임시저장.
+    int right = closest(v, mid + 1, end, st, ed);
+
+    int minist;
+
+    if (min(left, right) == right) {
+        minist = right;
+
+
+    }//작은 수 최소값으로 설정.
+    else {
+        minist = left;
+
+    }
+    // left가 작으면 left임시 저장 좌표를 가지고 있는다.
+
+    vector<Point> boundary; //경계선 점 체크
+
+    for (int i = start; i <= end; i++) {
+        int xdistance = v[i].x - v[mid].x;
+
+        if (min(xdistance * xdistance, minist) == xdistance * xdistance)    boundary.push_back(v[i]);
+    }
+
+
+    int bound_size = boundary.size();
+    sort(boundary.begin(), boundary.end(), compareY);
+
+    for (int i = 0; i < bound_size - 1; i++) {
+        for (int j = i + 1; j < bound_size; j++) {
+
+            int y = boundary[j].y - boundary[i].y;
+
+            if (min(y * y, minist) == y * y) { // 
+                int dist = distance(boundary[j], boundary[i]);
+
+                if (min(dist, minist) == dist)minist = dist;
+                st[0] = { boundary[i].x, boundary[i].y };
+                ed[0] = { boundary[j].x, boundary[j].y };
+            }
+            else
+                break;
+        }
+    }
+    return minist;
+}
+
+
+int main() {
+    int n;
+    cin >> n;
+    vector<Point> v(n);
+
+    vector<Point> st(2);
+    vector<Point> ed(2);
+
+
+    vector<Point> res;
+
+    for (int i = 0; i < n; i++)
+        cin >> v[i].x >> v[i].y;
+
+    sort(v.begin(), v.end());
+
+
+    closest(v, 0, n - 1, st, ed);
+
+    res.push_back({ st[0].x, st[0].y });
+    res.push_back({ ed[0].x, ed[0].y });
+
+    sort(res.begin(), res.end(), res_compere);
+
+    cout << "(" << res[0].x <<", " << res[0].y << ") " << "(" << res[1].x << ", " << res[1].y << ")";
+
+  //  for (auto a : res) cout << "(" << a.x << ", " << a.y << ") ";
+  // cout << "\n";
+  // cout << st[0].x << " " << st[0].y << "  " << ed[0].x << " " << ed[0].y << "\n";
+
+
+}
