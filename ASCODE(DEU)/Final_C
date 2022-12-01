@@ -1,0 +1,55 @@
+#include <iostream>
+#include <stack>
+
+#include <string>
+
+using namespace std;
+
+int main() {
+	bool quit = true;
+	stack <string> f, b;
+	string cur;
+	cur = "http://www.acm.org/";
+
+	while (quit) {
+		string st, url;
+
+		cin >> st;
+		if (st == "QUIT") {
+			quit = false;
+			continue;
+		}
+		else if (st == "VISIT") {
+			b.push(cur);
+
+			cin >> url;
+			cur = url;
+
+			while (!f.empty()) {
+				f.pop();
+			}
+		}
+		else if (st == "BACK") {
+			f.push(cur);
+			if (b.empty()) {
+				cout << "Ignored" << "\n";
+				continue;
+			}
+			else {
+				cur = b.top();
+				b.pop();
+			}
+
+		}
+		else if (st == "FORWARD") {
+			b.push(cur);
+
+			cur = f.top();
+			if (f.empty()) {
+				cout << "Ignored" << "\n";
+				continue;
+			}
+		}
+		cout << cur << "\n";
+	}
+}
