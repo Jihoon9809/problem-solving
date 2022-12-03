@@ -1,0 +1,80 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+int q[102];
+int p[102];
+int res[102];
+
+int main() {
+	int T;
+	cin >> T;
+
+	while (T--) {
+		int pn, qn;
+
+		cin >> pn;
+		for (int i = 0; i < pn; i++) {
+			int n, idx;
+			cin >> n >> idx;
+			p[idx] = n;
+		}
+		cin >> qn;
+		for (int i = 0; i < qn; i++) {
+			int n, idx;
+			cin >> n >> idx;
+			q[idx] = n;
+		}
+
+
+		for (int i = 0; i < 101; i++) {
+			if (q[i] != 0 || p[i] != 0)
+				res[i] = p[i] - q[i];
+			
+		}
+		bool plus = true;
+		bool zero_cnt = true;
+
+		for (int i = 100; i >= 0; i--) {
+			if (res[i] != 0) zero_cnt = false;
+		}
+
+		for (int i = 100; i >= 0; i--) {
+			if (zero_cnt) {
+				cout << 0 ;
+				break;
+			}
+			else {
+				if (!plus) {
+					if (res[i] > 0) cout << "+";
+				}
+
+				if (res[i] != 0) {
+					if (i == 0) {
+						cout << res[i];
+					}
+
+					else if (i == 1) {
+						if (res[i] == 1) cout << "x";
+						else if (res[i] == -1) cout << "-x";
+						else cout << res[i] << "x";
+					}
+					else {
+						if (res[i] == 1) cout << "x^" << i;
+						else if (res[i] == -1) cout << "-x^" << i;
+						else cout << res[i] << "x^" << i;
+					}
+
+					plus = false;
+				}
+			}
+		}
+		cout << "\n";
+		for (int i = 0; i < 101; i++) {
+			p[i] = q[i] = res[i] = 0;
+		}
+	}
+}
+
+문제를 잘 못 이해하여 하루가 걸림....
