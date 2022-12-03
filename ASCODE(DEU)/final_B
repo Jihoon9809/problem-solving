@@ -1,0 +1,54 @@
+#include <iostream>
+#include <stack>
+#include <string>
+
+using namespace std;
+
+int main() {
+	int T;
+	cin >> T;
+
+	while (T--) {
+		int n, first_n, second_n;
+		bool calculation = false;
+		cin >> n;
+
+		stack<string> s;
+
+		while (!s.empty()) s.pop();
+
+		for (int i = 0; i < n; i++) {
+			string st;
+			calculation = false;
+
+			cin >> st;
+
+			if (st == "+" || st == "-" || st == "/" || st == "*") {
+
+				if (s.size() < 2) 	continue;
+				
+
+				else {
+					calculation = true;
+					second_n = stoi(s.top());
+					s.pop();
+
+					first_n = stoi(s.top());
+					s.pop();
+
+					if (st == "+")  s.push(to_string(first_n + second_n));
+					else if (st == "-") s.push(to_string(first_n - second_n));
+					else if (st == "/") s.push(to_string(first_n / second_n));
+					else if (st == "*")  s.push(to_string(first_n * second_n));
+				}
+			}
+
+			else {
+				s.push(st);
+			}
+		}
+
+		if (s.size() == 1 && calculation) cout << s.top() << "\n";
+		else	cout << "Incorrect Expression!" << "\n";
+	}
+}
