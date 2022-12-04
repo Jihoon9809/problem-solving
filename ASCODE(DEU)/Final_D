@@ -1,0 +1,36 @@
+#include <iostream>
+#include <queue>
+#include <string>
+
+using namespace std;
+
+int main() {
+	int T;
+	cin >> T;
+
+	while (T--) {
+		int n;
+		cin >> n;
+
+		queue <int> q;
+
+		for (int i = 0; i < n; i++) {
+			int m;
+			string st;
+
+			cin >> st;
+
+			if (st == "In") {
+				cin >> m;
+				q.push(m);
+			}
+			else if (st == "Out") {
+				if (!q.empty()) {
+					cout << q.front() << "\n";
+					q.pop();
+				}
+				else cout << "Empty" << "\n";
+			}
+		}
+	}
+}
