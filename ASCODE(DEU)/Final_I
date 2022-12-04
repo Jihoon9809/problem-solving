@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int arr[100001];
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int money, count = 0, res = 9999999;
+
+        vector<int> v;
+
+        cin >> money >> count;
+
+        for (int i = 0; i < count; i++) {
+            int kind; // 권종
+            cin >> kind;
+            v.push_back(kind);
+        }
+
+        for (int i = 0; i < v.size(); i++) {
+            arr[v[i]] = 1;
+            for (int j = v[i] + 1; j <= money; j++) {
+                if (arr[j - v[i]]) arr[j] = arr[j] ? min(arr[j], arr[j - v[i]] + 1) : arr[j - v[i]] + 1;
+            }
+        }
+
+        if (arr[money] == 0) cout << "NO" << "\n";
+        else cout << arr[money] << "\n";
+
+        for (int i = 0; i < 100001; i++) arr[i] = 0;
+    }
+
+}
