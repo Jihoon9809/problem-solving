@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+int arr[10002];
+
+int main() {
+	int n, find = 0;
+	cin >> n;
+
+	arr[1] = arr[3] = arr[7] = arr[12] = 1;
+	arr[2] = 2; arr[4] = 2; arr[5] = 3; arr[6] = 2; arr[8] = 2; arr[9] = 3; arr[10] = 2; arr[11] = 3;
+
+	for (int i = 13; i < 10002; i++) {
+		if (arr[i - 1]) arr[i] = arr[i - 1] + 1;
+		if (arr[i - 3]) arr[i] = arr[i] ? min(arr[i], arr[i - 3] + 1) : arr[i - 3] + 1;
+		if (arr[i - 7]) arr[i] = arr[i] ? min(arr[i], arr[i - 7] + 1) : arr[i - 7] + 1;
+		if (arr[i - 12]) arr[i] = arr[i] ? min(arr[i], arr[i - 12] + 1) : arr[i - 12] + 1;
+	}
+
+	while (n--) {
+		cin >> find;
+		cout << arr[find] << "\n";
+	}
+}
