@@ -1,0 +1,29 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+int solution(vector<vector<int>> sizes) {
+    int answer = 0;
+    
+    sort(sizes.begin(),sizes.end());    
+    int max_a = sizes[sizes.size()-1][0];
+    int max_b = 0;
+    for(int i =0;i<sizes.size();i++){
+        if(max_a < sizes[i][1]) max_a = sizes[i][1];
+        if(sizes[i][0] < sizes[i][1]){
+            if(max_b < sizes[i][0]) max_b = sizes[i][0];
+        }
+        else {
+            if(max_b < sizes[i][1]) max_b = sizes[i][1];
+        }
+    }
+        cout << max_a << " " << max_b ;
+        answer = max_a * max_b;
+    return answer;
+}
+
+// vector<pair<int,int>> 로 벡터안에 2개의 값을 저장했지만 이번 문제를 풀며 2차원 벡터를 사용하는 법을 찾아보았따.
+// 아직 2차원 벡터에 대해서 미숙한 점이 존재하며, 특히 2차원 벡터를 좀 더 이해한다면 코드의 크기, 길이를 줄일 수 있을 것 같다.
