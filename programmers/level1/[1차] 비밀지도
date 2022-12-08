@@ -1,0 +1,33 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+    vector<string> answer;
+    
+    for(int i =0;i<n;i++){
+        string temp = "";
+        
+        int targ = arr1[i] | arr2[i];
+        while(temp.size() != n){
+            if(targ % 2 == 0) temp.push_back(' ');
+            else temp.push_back ('#');
+            targ /= 2;
+        }
+        reverse(temp.begin(),temp.end());
+        answer.push_back(temp);
+    }
+    
+    
+    return answer;
+}
+
+처음시도 : int 배열 arr1, arr2를 string 으로 변환하여 #을 " "를 대입하여 더할 생각이였다.
+하지만 시간이 오래 거릴것 같아 수정을 하였다.
+
+OR을 활용하여 문제를 풀었다.
+9  = 01001
+90 = 11110 이므로 문제의 조건에 둘중 하나라도 1(#)일 경우 #을 출력 모두 공백일경우 공백 출력 을 요구 하였다.
+따라서 or 을 할 경우 11111으로 표현이 가능하다.
