@@ -1,0 +1,32 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int targ;
+
+bool cmp(string a, string b){
+    if( a[targ] != b[targ]) return a[targ] < b[targ];
+    else return a<b;
+}
+
+vector<string> solution(vector<string> strings, int n) {
+    vector<string> answer;
+    
+    targ = n;
+    sort(strings.begin(),strings.end(),cmp);
+    
+    
+    
+    return strings;
+    
+}
+
+
+/*
+입력받은 n을 전역변수 target에 대입하여 정렬을 한다.
+정렬의 기준은 문자열 s의 두번째 인자를 기준으로 한다.
+
+cmp를 통해 a[n] b[n]을 비교하여 반환한다.
+*/
