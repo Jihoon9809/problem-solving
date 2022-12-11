@@ -1,0 +1,37 @@
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+int solution(string s) {
+    int answer = 0;
+    char target = s[0];
+    int div =1, others =0;
+    
+    for(int i =1;i<=s.size();i++){
+        if(target != s[i]){
+            others++;
+//            cout << "aa" <<"\n";
+        }     
+        else if(target == s[i]){
+            div ++;
+//            cout << "bb" <<"\n";
+        }
+        
+        if(div == others) {
+            answer++;
+            div = 1;
+            others = 0;
+            target = s[i+1];
+            i++;
+        }
+    }
+    
+    if(div > 1 && others ==1) answer++;
+//    cout << div <<" " << others;
+    
+    return answer;
+}
+
+/*40개 중 3개의 테스트 케이스가 실패한다.
