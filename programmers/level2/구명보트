@@ -1,0 +1,57 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+
+bool cmp(int a,int b){
+    return a > b;
+}
+
+int solution(vector<int> people, int limit) {
+    int answer = 0;
+    bool check = false;    
+    vector<int> v;
+    
+    sort(people.begin(),people.end(),cmp);
+    
+    for(int i =0;i<people.size();i++){
+        if(v.empty()) v.push_back(people[i]);
+        else{
+            for(int j =0;j <v.size();j++){
+                if(limit-v[j] >= people[i]){
+                    v[j] += people[i];
+                    check = true;
+                    break;
+                }
+            }
+            if(!check) v.push_back(people[i]);
+        }
+    }
+    
+    answer = v.size();
+    
+    return answer;
+}
+
+//잘 못 풀긴 했지만 왜 틀린지 이해가 안간다.
+
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+
+int solution(vector<int> people, int limit) {
+    int answer = 0, idx =0;
+    vector<int> v;
+    
+    sort(people.begin(),people.end());
+
+    while(idx < people.size()){
+        if(people[idx] + people.back() <= limit) idx ++;
+        people.pop_back();
+        answer ++;
+    }
+    return answer;
+}
