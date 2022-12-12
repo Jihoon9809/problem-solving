@@ -1,0 +1,42 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int fibo(int n){
+    
+    if(n == 0) return 0;
+    else if(n == 1) return 1;
+    else return (fibo(n-1)+fibo(n-2)) %1234567;
+    
+}
+
+int solution(int n) {
+    int answer = 0;
+    
+    answer = fibo(n);
+    
+    return answer;
+}
+// 시간 초과가 나온다.
+
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n) {
+    int answer = 0;
+    int arr[100001];
+    arr[0] = 0; arr[1] =1;
+    
+    for(int i =2;i<100001;i++){
+        arr[i] = (arr[i-1]+arr[i-2]) %1234567;
+    }
+    
+    answer = arr[n];
+    return answer;
+}
+
+
