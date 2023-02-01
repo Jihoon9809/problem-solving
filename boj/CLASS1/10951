@@ -1,0 +1,22 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+
+	while (1) {
+		int n1, n2;
+
+		cin >> n1 >> n2;
+		
+		if (cin.eof() == 1) break;
+
+		cout << n1 + n2 << "\n";
+
+	}
+
+	/*
+	//int n1, n2;
+		while(cin >> n1 >> n2) cout << n1+n2 << "\n";
+	*/
+}
