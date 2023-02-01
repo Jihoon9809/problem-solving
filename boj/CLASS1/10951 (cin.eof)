@@ -20,3 +20,6 @@ int main() {
 		while(cin >> n1 >> n2) cout << n1+n2 << "\n";
 	*/
 }
+
+
+eof(end of file)로 입력이 ctrl + Z 일 경우 종료를 한다.
