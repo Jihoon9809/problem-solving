@@ -1,0 +1,16 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	double a, b;
+
+	cin >> a >> b;
+	cout.precision(15);
+	cout << a / b;
+}
+
+//cout.precisision(n) 을 활용하여 소수점 아래의 수를 n으로 고정하여 출력한다.
