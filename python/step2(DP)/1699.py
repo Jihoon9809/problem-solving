@@ -11,6 +11,6 @@ for i in range(2,n+1):
     arr[target] = 1
     
     for j in range(target+1,n+1):
-        arr[j] = arr[j - target] + arr[target]
+        arr[j] = min(arr[j],arr[j - target] + arr[target])
         
 print(arr[n])
